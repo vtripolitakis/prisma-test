@@ -1,0 +1,160 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  Id           Int     @id @default(autoincrement())
+  CategoryName String?
+  Description  String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model Customer {
+  Id           String? @id
+  CompanyName  String?
+  ContactName  String?
+  ContactTitle String?
+  Address      String?
+  City         String?
+  Region       String?
+  PostalCode   String?
+  Country      String?
+  Phone        String?
+  Fax          String?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model CustomerCustomerDemo {
+  Id             String? @id
+  CustomerTypeId String?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model CustomerDemographic {
+  Id           String? @id
+  CustomerDesc String?
+
+  @@ignore
+}
+
+model Employee {
+  Id              Int     @id @default(autoincrement())
+  LastName        String?
+  FirstName       String?
+  Title           String?
+  TitleOfCourtesy String?
+  BirthDate       String?
+  HireDate        String?
+  Address         String?
+  City            String?
+  Region          String?
+  PostalCode      String?
+  Country         String?
+  HomePhone       String?
+  Extension       String?
+  Photo           Bytes?
+  Notes           String?
+  ReportsTo       Int?
+  PhotoPath       String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model EmployeeTerritory {
+  Id          String? @id
+  EmployeeId  Int
+  TerritoryId String?
+
+  @@ignore
+}
+
+model Order {
+  Id             Int     @id @default(autoincrement())
+  CustomerId     String?
+  EmployeeId     Int
+  OrderDate      String?
+  RequiredDate   String?
+  ShippedDate    String?
+  ShipVia        Int?
+  Freight        Decimal
+  ShipName       String?
+  ShipAddress    String?
+  ShipCity       String?
+  ShipRegion     String?
+  ShipPostalCode String?
+  ShipCountry    String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model OrderDetail {
+  Id        String? @id
+  OrderId   Int
+  ProductId Int
+  UnitPrice Decimal
+  Quantity  Int
+  Discount  Float
+
+  @@ignore
+}
+
+model Product {
+  Id              Int     @id @default(autoincrement())
+  ProductName     String?
+  SupplierId      Int
+  CategoryId      Int
+  QuantityPerUnit String?
+  UnitPrice       Decimal
+  UnitsInStock    Int
+  UnitsOnOrder    Int
+  ReorderLevel    Int
+  Discontinued    Int
+}
+
+model Region {
+  Id                Int     @id @default(autoincrement())
+  RegionDescription String?
+}
+
+model Shipper {
+  Id          Int     @id @default(autoincrement())
+  CompanyName String?
+  Phone       String?
+}
+
+model Supplier {
+  Id           Int     @id @default(autoincrement())
+  CompanyName  String?
+  ContactName  String?
+  ContactTitle String?
+  Address      String?
+  City         String?
+  Region       String?
+  PostalCode   String?
+  Country      String?
+  Phone        String?
+  Fax          String?
+  HomePage     String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model Territory {
+  Id                   String? @id
+  TerritoryDescription String?
+  RegionId             Int
+
+  @@ignore
+}
+
+model Client {
+  Id           Int     @id @default(autoincrement())
+  ClientName String?
+  ClientSurname  String?
+}
