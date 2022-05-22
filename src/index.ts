@@ -1,17 +1,35 @@
-import { Employee, PrismaClient } from '@prisma/client'
+import { Client, PrismaClient, Review, Product } from '@prisma/client'
 const prisma = new PrismaClient();
 
-const fetchEmployees = async () => {
-    const employees = prisma.employee.findMany();
-    return employees;
+type ClientWithReviewWithProduct = (Client & {
+    Review: (Review & {
+        product: Product;
+    })[];
+});
+
+const fetchClients = async () => {
+    const clients = await prisma.client.findMany({
+        include: {
+            Review: {
+                include: {
+                    product: true
+                }
+            }
+        }
+    });
+    return clients;
 }
 
-fetchEmployees()
-    .then((employees: Employee[]) => {
-        console.log(`id\tfirst name\t\tlast name`)
-        employees.forEach((employee: Employee) => {
-            const { Id, FirstName, LastName } = employee;
-            console.log(`${Id}\t${FirstName}\t\t${LastName}`)
+fetchClients()
+    .then((clients: ClientWithReviewWithProduct[]) => {
+        clients.forEach((client: ClientWithReviewWithProduct) => {
+            const { Id, ClientName, ClientSurname, Review } = client;
+            console.log(`USER ${Id}`);
+            console.log(`Name: ${ClientName}\t SURNAME: ${ClientSurname}`)
+            console.log('REVIEWS');
+            Review.forEach((review) => {
+                console.log(`== PRODUCT: ${review.product.ProductName}\t GRADE: ${review.grade}`)
+            })
         });
     }
     );

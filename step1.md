@@ -3,7 +3,7 @@
 ## https://v.trp.gr - vtripolitakis@me.com - 22/05/2022
 
 ## What's this?
-Today we'll cover migrations in Prisma. We'll create a couple of tables, add some data and
+Today we'll cover migrations in Prisma. We'll create a couple of models, add some data and
 perform respective queries. We'll extend the current schema with clients and product reviews.
 
 ## Instructions
@@ -66,5 +66,5 @@ model Product {
 
 ## What I can do next?
 - Run `yarn prisma studio` to start Prisma Studio and check the changes. Add some clients and some reviews.
-- Run `yarn tsc ./src/step1.ts` and then `node dist/step1.js` to see the Clients and the Reviews table on the console. 
--- Play around and have fun with the `src/step1.ts`
+- Run `yarn tsc ./src/index.ts` and then `node dist/index.js` to see the Clients and the Reviews table on the console. 
+- Play around and have fun with the `src/step1.ts`
