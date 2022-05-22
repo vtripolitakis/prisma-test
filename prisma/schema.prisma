@@ -116,6 +116,7 @@ model Product {
   UnitsOnOrder    Int
   ReorderLevel    Int
   Discontinued    Int
+  Review          Review[]
 }
 
 model Region {
@@ -157,4 +158,14 @@ model Client {
   Id           Int     @id @default(autoincrement())
   ClientName String?
   ClientSurname  String?
+  Review       Review[]
+}
+
+model Review {
+  grade        Int
+  clientId     Int
+  productId    Int
+  client     Client        @relation(fields: [clientId], references: [Id])
+  product     Product        @relation(fields: [productId], references: [Id])
+  @@id([clientId, productId])
 }

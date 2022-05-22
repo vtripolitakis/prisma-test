@@ -21,10 +21,50 @@ model Client {
   ClientSurname  String?
 }
 ```
-- Run `yarn prisma generate` to generate the `@prisma/client` for this demo application
+- Run `yarn prisma migrate dev` to generate the respective migration and of course generate a new `@prisma/client` for this application.
+- Now the Prisma client knows how to handle the `Client` table.
+- Now let's add the `Review` model and make changes to the `Product` and `Client` models. Add these lines to the `prisma/schema.prisma` file:
+
+```
+model Review {
+  grade        Int
+  clientId     Int
+  productId    Int
+  client     Client        @relation(fields: [clientId], references: [Id])
+  product     Product        @relation(fields: [productId], references: [Id])
+  @@id([clientId, productId])
+}
+
+```
+Change `Client` as shown below:
+```
+model Client {
+  Id           Int     @id @default(autoincrement())
+  ClientName String?
+  ClientSurname  String?
+  Review       Review[]
+}
+```
+Change `Product` as follows:
+```
+model Product {
+  Id              Int     @id @default(autoincrement())
+  ProductName     String?
+  SupplierId      Int
+  CategoryId      Int
+  QuantityPerUnit String?
+  UnitPrice       Decimal
+  UnitsInStock    Int
+  UnitsOnOrder    Int
+  ReorderLevel    Int
+  Discontinued    Int
+  Review          Review[]
+}
+```
+- Run `yarn prisma migrate dev --name add-reviews`, check the new migration that was made inside `prisma/migrations`.
+- Now the Prisma client knows how to handle the updated `Client` and `Product` models and their M:N relation through the `Review` model.
 
 ## What I can do next?
-
-- Either run `yarn tsc` and then `node dist/` to see the Employees table on the console. 
-- Or Run `yarn prisma studio` to start Prisma Studio and check the supplied database
--- Play around and have fun with the `src/index.ts`
+- Run `yarn prisma studio` to start Prisma Studio and check the changes. Add some clients and some reviews.
+- Run `yarn tsc ./src/step1.ts` and then `node dist/step1.js` to see the Clients and the Reviews table on the console. 
+-- Play around and have fun with the `src/step1.ts`

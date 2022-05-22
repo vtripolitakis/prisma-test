@@ -41,15 +41,27 @@ var prisma = new client_1.PrismaClient();
 var fetchClients = function () { return __awaiter(void 0, void 0, void 0, function () {
     var clients;
     return __generator(this, function (_a) {
-        clients = prisma.client.findMany();
+        clients = prisma.review.findMany();
         return [2 /*return*/, clients];
     });
 }); };
+// fetchClients()
+//     .then((clients: Client[]) => {
+//         console.log(`id\tfirst name\t\tlast name`)
+//         clients.forEach((client: Client) => {
+//             const { Id, ClientName, ClientSurname } = client;
+//             console.log(`${Id}\t${ClientName}\t\t${ClientSurname}`)
+//         });
+//     }
+//     );
 fetchClients()
-    .then(function (clients) {
-    console.log("id\tfirst name\t\tlast name");
-    clients.forEach(function (client) {
-        var Id = client.Id, ClientName = client.ClientName, ClientSurname = client.ClientSurname;
-        console.log("".concat(Id, "\t").concat(ClientName, "\t\t").concat(ClientSurname));
-    });
+    .then(function (reviews) {
+    console.log(reviews);
+    console.log(reviews[0].client, reviews[0].product);
+    //console.log(`id\tfirst name\t\tlast name`)
+    // clients.forEach((client: Client) => {
+    //     console.log(client);
+    //     const { Id, ClientName, ClientSurname } = client;
+    //     console.log(`${Id}\t${ClientName}\t\t${ClientSurname}`)
+    // });
 });
